@@ -11,8 +11,12 @@ gleich beim Programmstart oder aus Versehen loslegt.
 
 Noch keine Drag-/Scroll-Gesten - siehe CLAUDE.md fuer die naechsten Schritte.
 Debug-Fenster mit 'q' oder ESC schliessen.
+
+Fuer Rechner ohne Webcam bzw. ohne Bildschirm (Container, CI) gibt es
+--source <videodatei> und --no-window; im Normalfall reicht `python main.py`.
 """
 
+import argparse
 import time
 
 import cv2
@@ -31,8 +35,32 @@ from tracker import INDEX_FINGER_TIP, HandTracker
 from volume_control import VolumeController
 
 
-def main():
-    camera = Camera()
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Gestik-Maus")
+    parser.add_argument(
+        "--source", default="0",
+        help="Kamera-Index (Standard: 0) oder Pfad zu einer Videodatei. "
+             "Eine Videodatei ersetzt die Webcam - gedacht zum Testen auf "
+             "Rechnern ohne Kamera.",
+    )
+    parser.add_argument(
+        "--no-window", action="store_true",
+        help="Debug-Fenster nicht anzeigen (noetig ohne Grafik-Ausgabe).",
+    )
+    parser.add_argument(
+        "--start-active", action="store_true",
+        help="Steuerung sofort aktiv statt erst nach dem ersten Klatschen. "
+             "Nur zum Testen - im Normalbetrieb absichtlich aus, damit der "
+             "Cursor nicht gleich beim Start losgeht.",
+    )
+    args = parser.parse_args(argv)
+    args.source = int(args.source) if args.source.isdigit() else args.source
+    return args
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    camera = Camera(args.source)
     tracker = HandTracker(max_hands=2)
     mouse = MouseController()
     volume = VolumeController()
@@ -41,7 +69,7 @@ def main():
     rotation = RotationVolumeControl()
     clap_detector = ClapDetector()
 
-    active = False
+    active = args.start_active
     prev_time = time.time()
 
     try:
@@ -133,6 +161,8 @@ def main():
                 cv2.FONT_HERSHEY_SIMPLEX, 0.9, status_color, 2,
             )
 
+            if args.no_window:
+                continue
             cv2.imshow("Gestik-Maus - Debug (q zum Beenden)", frame)
             key = cv2.waitKey(1) & 0xFF
             if key in (ord("q"), 27):  # 27 = ESC

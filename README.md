@@ -18,7 +18,7 @@ Pinch-Wert und den Aktiv/Inaktiv-Status.
 
 ## Voraussetzungen
 
-- Windows
+- Windows (Linux/macOS starten inzwischen auch, sind aber ungetestet)
 - Python 3.10–3.12
 - Eine Webcam
 
@@ -39,6 +39,20 @@ Start automatisch heruntergeladen.
 
 ```
 python main.py
+```
+
+Optionen (nur zum Testen nötig, im Normalfall reicht `python main.py`):
+
+| Option | Wirkung |
+| --- | --- |
+| `--source <index\|datei>` | Kamera-Index (Standard `0`) oder eine Videodatei statt der Webcam |
+| `--no-window` | kein Debug-Fenster (für Rechner ohne Bildschirmausgabe) |
+| `--start-active` | startet aktiv, ohne auf das erste Klatschen zu warten |
+
+Die Gesten-Logik lässt sich ohne Webcam prüfen:
+
+```
+python test_gestures.py
 ```
 
 Das Debug-Fenster mit `q` oder `ESC` schließen. Cursor in eine

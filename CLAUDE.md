@@ -31,6 +31,8 @@ Handgeste vor der Webcam.
   Cursor bewegen/klicken
 - `volume_control.py` – Systemlautstärke über Medientasten
 - `main.py` – Haupt-Loop, verbindet alles, zeigt Debug-Overlay
+- `test_gestures.py` – prüft die Gesten-Logik mit synthetischen Landmarks
+  (läuft ohne Webcam/Bildschirm; alles andere bleibt manueller Test)
 
 ## Aktueller Stand (Schritt 3)
 
@@ -50,6 +52,11 @@ Handgeste vor der Webcam.
 - Debug-Fenster zeigt: FPS, Pinch-Status, Aktiv/Inaktiv-Status (unten links),
   Skelett aller erkannten Hände.
 - Noch **keine** Rechtsklick-/Scroll-/Drag-Gesten.
+- `capture.py` benutzt `CAP_DSHOW` nur noch unter Windows (auf Linux/macOS
+  schlägt `VideoCapture` mit diesem Backend sofort fehl) und akzeptiert statt
+  eines Kamera-Index auch eine Videodatei. Zusammen mit `--no-window` und
+  `--start-active` lässt sich der komplette Loop damit auf einem Rechner
+  ohne Kamera durchlaufen — für die echte Nutzung bleibt die Webcam gemeint.
 
 ## Bekannte Einschränkungen / offene Fragen
 
@@ -66,6 +73,16 @@ Handgeste vor der Webcam.
 - Welche der zwei Hände beim Klatschen `hands[0]` wird (und damit die
   Cursor-Hand ist), ist nicht deterministisch, wenn zwischenzeitlich beide
   Hände im Bild sind.
+- `TOUCH_THRESHOLD = 0.12` verlangt, dass die beiden Hand-Zentren auf 12 %
+  der Bildbreite zusammenkommen — die Hände müssen sich im Kamerabild also
+  fast überdecken. Beim ersten echten Test darauf achten, ob ein normales
+  Klatschen diesen Wert überhaupt erreicht; der Debug-Text zeigt den
+  gemessenen Abstand live an.
+- `PINCH_THRESHOLD = 0.35` schlägt schon an, wenn die Hand einfach zur Faust
+  geschlossen ist (Daumen liegt dann ohnehin am Mittelfinger). Bei einer
+  Zeige-Pose mit angelegtem Daumen wurde 0.24 gemessen, also klar unter der
+  Schwelle → ungewollter Klick. Beim Test prüfen, ob die Schwelle niedriger
+  muss.
 
 ## Ausführen
 
@@ -74,6 +91,13 @@ python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 python main.py
+```
+
+Ohne Kamera/Bildschirm (Container, CI) läuft nur:
+
+```
+python test_gestures.py
+python main.py --source <videodatei> --no-window --start-active
 ```
 
 Debug-Fenster mit `q` oder `ESC` schließen. Cursor in eine Bildschirmecke
