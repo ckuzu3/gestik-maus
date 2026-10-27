@@ -9,7 +9,7 @@ Die Steuerung startet INAKTIV - erst nach einem Klatschen bewegt sich der
 Cursor. Nochmal klatschen pausiert wieder. Das verhindert, dass der Cursor
 gleich beim Programmstart oder aus Versehen loslegt.
 
-Noch keine Drag-/Scroll-Gesten - siehe CLAUDE.md fuer die naechsten Schritte.
+Noch keine Drag-/Scroll-Gesten - siehe docs/ARCHITEKTUR.md fuer die naechsten Schritte.
 Debug-Fenster mit 'q' oder ESC schliessen.
 """
 

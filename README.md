@@ -25,7 +25,7 @@ Pinch-Wert und den Aktiv/Inaktiv-Status.
 ## Installation
 
 ```
-git clone https://github.com/<dein-user>/gestik-maus.git
+git clone https://github.com/ckuzu3/gestik-maus.git
 cd gestik-maus
 python -m venv venv
 venv\Scripts\activate
@@ -52,13 +52,12 @@ automatische Bewegung – das dient als Not-Aus.
   Lautstärke-Schritt auslösen.
 - Die Schwellenwerte für Klatsch- und Pinch-Erkennung (`gestures.py`) sind
   Startwerte und je nach Kamera/Abstand ggf. anzupassen.
-- Noch keine Rechtsklick-, Scroll- oder Drag-Geste (siehe `CLAUDE.md` für
-  die Roadmap).
+- Noch keine Rechtsklick-, Scroll- oder Drag-Geste.
 
-## Mitentwickeln
+## Weiterentwickeln
 
-Details zu Architektur, aktuellem Stand und nächsten Schritten stehen in
-[`CLAUDE.md`](./CLAUDE.md).
+Aufbau der Module, aktueller Stand und die nächsten geplanten Gesten stehen in
+[`docs/ARCHITEKTUR.md`](./docs/ARCHITEKTUR.md).
 
 ## Lizenz
 

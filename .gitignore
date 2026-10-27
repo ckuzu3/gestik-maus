@@ -2,3 +2,7 @@ venv/
 __pycache__/
 *.pyc
 .vscode/
+
+# Wird von tracker.py beim ersten Start automatisch heruntergeladen -
+# gehoert nicht ins Repo (ein paar MB, jeder Nutzer laedt es sich selbst).
+hand_landmarker.task

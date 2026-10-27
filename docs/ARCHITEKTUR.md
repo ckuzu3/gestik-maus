@@ -1,4 +1,7 @@
-# Gestik-Maus
+# Architektur und Stand
+
+Notizen zu Aufbau, aktuellem Stand und offenen Punkten. Die Kurzfassung für
+Nutzer steht im [README](../README.md).
 
 Systemweiter Mausersatz unter Windows per Webcam-Handtracking (MediaPipe).
 Ziel: Cursor bewegen, klicken, scrollen und ziehen ausschließlich per
@@ -32,7 +35,7 @@ Handgeste vor der Webcam.
 - `volume_control.py` – Systemlautstärke über Medientasten
 - `main.py` – Haupt-Loop, verbindet alles, zeigt Debug-Overlay
 
-## Aktueller Stand (Schritt 3)
+## Aktueller Stand
 
 - Cursor-Bewegung per Zeigefingerspitze (fertig)
 - Linksklick per Pinch-Geste (Daumen + Mittelfinger — bewusst nicht der
@@ -81,7 +84,7 @@ bewegen (physische Maus) löst `pyautogui`s Failsafe aus und stoppt sofort
 jede automatische Bewegung – das ist der Not-Aus. Einmal klatschen (beide
 Hände kurz zusammenschlagen) aktiviert/pausiert die Steuerung.
 
-## Nächste Schritte (nicht Teil dieses Commits)
+## Nächste Schritte
 
 1. Klatsch- und Dreh-Schwellen anhand von echtem Testfeedback justieren
 2. Zweite Pinch-Variante (Daumen + Zeigefinger, während Zeigefinger kurz
@@ -90,6 +93,7 @@ Hände kurz zusammenschlagen) aktiviert/pausiert die Steuerung.
 4. Zwei-Finger-Bewegung vertikal → Scrollen
 5. Tray-Icon (`pystray`) + Autostart + PyInstaller-Packaging
 
-Bitte jeweils **eine** Erweiterung pro Änderung umsetzen und danach manuell
-vor der Kamera testen lassen (automatisiertes Testen ist hier nicht möglich)
-statt mehrere Gesten auf einmal einzubauen.
+Ich baue jeweils **eine** Erweiterung pro Änderung und teste sie danach vor der
+Kamera, statt mehrere Gesten auf einmal einzuhängen. Gestenerkennung lässt sich
+hier nicht automatisiert testen, und bei zwei neuen Gesten gleichzeitig weiß ich
+hinterher nicht, welche die andere stört.
